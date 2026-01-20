@@ -14,7 +14,22 @@ func _ready() -> void:
 	# Load initial screen
 	ScreenManager.load_screen(0)
 	
-	print("Game world ready with sky background")
+	# Optional: Add fog effect (uncomment to enable)
+	# _add_fog_effect()
+	
+	print("Game world ready with parallax backgrounds")
+
+func _add_fog_effect() -> void:
+	"""Add atmospheric fog to the scene"""
+	if background:
+		# Simple fog (no texture needed) - light atmospheric haze
+		background.add_fog_layer(null, 0.3, 0.15, -500)
+		
+		# OR use textured fog (if you have bg-fog.png):
+		# var fog_texture = load("res://assets/backgrounds/bg-fog.png")
+		# background.add_fog_layer(fog_texture, 0.5, 0.2, -300)
+		
+		print("Fog effect added to scene")
 
 func _process(_delta: float) -> void:
 	# Check for screen transitions

@@ -10,6 +10,7 @@ var treeline_layer: ParallaxLayer = null
 var cloud_layer: ParallaxLayer = null
 var mountain_layer: ParallaxLayer = null
 var path_layer: ParallaxLayer = null
+var fog_layer: ParallaxLayer = null
 var foreground_layer: ParallaxLayer = null
 
 func _ready() -> void:
@@ -232,6 +233,63 @@ func remove_path() -> void:
 	if path_layer:
 		path_layer.queue_free()
 		path_layer = null
+
+func add_fog_layer(texture: Texture2D = null, intensity: float = 0.3, speed: float = 0.15, z_level: int = -500) -> void:
+	"""Add atmospheric fog layer
+	
+	Args:
+		texture: Optional fog texture (if null, creates simple overlay)
+		intensity: Fog opacity 0.0-1.0 (0.3 = light fog, 0.7 = thick fog)
+		speed: Fog drift speed (0.15 = slow, 0.5 = medium)
+		z_level: Z-index (-500 = between treeline and path, -100 = near player)
+	"""
+	if fog_layer:
+		fog_layer.queue_free()
+	
+	fog_layer = ParallaxLayer.new()
+	fog_layer.name = "FogLayer"
+	fog_layer.motion_scale = Vector2(speed, 0.0)
+	
+	if texture:
+		fog_layer.motion_mirroring = Vector2(texture.get_width(), 0)
+	
+	add_child(fog_layer)
+	
+	if texture:
+		# Textured fog (moving fog banks)
+		var sprite = Sprite2D.new()
+		sprite.texture = texture
+		sprite.centered = false
+		sprite.position = Vector2.ZERO
+		sprite.modulate = Color(1.0, 1.0, 1.0, intensity)
+		sprite.z_index = z_level
+		fog_layer.add_child(sprite)
+	else:
+		# Simple fog overlay (static atmospheric fog)
+		var fog_rect = ColorRect.new()
+		fog_rect.size = get_viewport().get_visible_rect().size
+		fog_rect.color = Color(0.8, 0.85, 0.9, intensity)  # Slightly blue-tinted fog
+		fog_rect.z_index = z_level
+		fog_layer.add_child(fog_rect)
+	
+	print("Fog layer created (intensity: ", intensity, ", speed: ", speed, ")")
+
+func remove_fog() -> void:
+	"""Remove fog layer"""
+	if fog_layer:
+		fog_layer.queue_free()
+		fog_layer = null
+
+func set_fog_intensity(intensity: float) -> void:
+	"""Change fog opacity (0.0 = invisible, 1.0 = opaque)"""
+	if not fog_layer:
+		return
+	
+	for child in fog_layer.get_children():
+		if child is Sprite2D:
+			child.modulate.a = intensity
+		elif child is ColorRect:
+			child.color.a = intensity
 
 func set_sky_texture(texture: Texture2D) -> void:
 	"""Change the sky texture"""

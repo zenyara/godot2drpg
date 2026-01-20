@@ -33,6 +33,58 @@
 - **Tiling**: Horizontal (repeats seamlessly)
 - **Z-Index**: -1 (just below player, top background layer)
 
+## Atmospheric Effects
+
+### Fog Layer
+Fog adds depth and atmosphere to your scenes!
+
+**Two Types:**
+1. **Simple Fog** (No texture needed)
+   - Semi-transparent color overlay
+   - Quick and easy
+   - Good for light atmospheric haze
+
+2. **Textured Fog** (With fog texture)
+   - Moving fog banks
+   - More realistic
+   - Can drift across screen
+
+**Usage:**
+```gdscript
+# Simple fog (no texture)
+background.add_fog_layer(null, 0.3, 0.15, -500)
+# intensity: 0.3 (light), speed: 0.15 (slow), z: -500
+
+# With texture (create bg-fog.png)
+var fog_texture = load("res://assets/backgrounds/bg-fog.png")
+background.add_fog_layer(fog_texture, 0.5, 0.2, -200)
+# intensity: 0.5 (medium), speed: 0.2 (slow drift)
+
+# Change fog intensity dynamically
+background.set_fog_intensity(0.7)  # Thicker fog
+
+# Remove fog
+background.remove_fog()
+```
+
+**Fog Intensity Guide:**
+- **0.1-0.2**: Very light haze
+- **0.3-0.4**: Light fog (still see clearly)
+- **0.5-0.6**: Medium fog (atmospheric)
+- **0.7-0.8**: Thick fog (limited visibility)
+- **0.9-1.0**: Very dense fog (spooky!)
+
+**Fog Speed Guide:**
+- **0.05-0.1**: Very slow (barely moving)
+- **0.15-0.2**: Slow drift (realistic)
+- **0.3-0.5**: Medium speed (windy day)
+- **0.6+**: Fast (storm effects)
+
+**Z-Index Placement:**
+- **-100 to -200**: Near player (ground fog)
+- **-300 to -500**: Mid-distance (atmospheric)
+- **-600 to -900**: Far (background haze)
+
 ## Adding New Background Layers
 
 ### Layer Types
@@ -62,6 +114,7 @@
 Use descriptive names:
 - `bg-sky-[variation].jpg` - Sky backgrounds
 - `bg-clouds-[type].png` - Cloud layers (use PNG for transparency)
+- `bg-fog-[type].png` - Fog overlays (PNG with transparency)
 - `bg-mountains-[biome].png` - Mountain/distant layers
 - `bg-foreground-[element].png` - Foreground elements
 
@@ -69,6 +122,8 @@ Examples:
 - `bg-sky-day.jpg`
 - `bg-sky-night.jpg`
 - `bg-clouds-fluffy.png`
+- `bg-fog-light.png`
+- `bg-fog-thick.png`
 - `bg-mountains-snowy.png`
 - `bg-foreground-trees.png`
 
