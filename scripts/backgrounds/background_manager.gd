@@ -6,6 +6,7 @@ class_name BackgroundManager
 var sky_layer: ParallaxLayer = null
 
 # Additional layers
+var treeline_layer: ParallaxLayer = null
 var cloud_layer: ParallaxLayer = null
 var mountain_layer: ParallaxLayer = null
 var foreground_layer: ParallaxLayer = null
@@ -16,6 +17,9 @@ func _ready() -> void:
 	
 	# Create default sky layer
 	create_sky_layer()
+	
+	# Create treeline layer
+	create_treeline_layer()
 
 func create_sky_layer() -> void:
 	"""Create the sky background layer"""
@@ -56,6 +60,38 @@ func create_sky_layer() -> void:
 	sky_layer.add_child(sprite)
 	
 	print("Sky background layer created")
+
+func create_treeline_layer() -> void:
+	"""Create the treeline background layer (sits on top of sky)"""
+	# Load the treeline texture
+	var treeline_texture = load("res://assets/backgrounds/bg-treeline.png")
+	
+	if not treeline_texture:
+		push_warning("Treeline texture not found!")
+		return
+	
+	# Create parallax layer
+	treeline_layer = ParallaxLayer.new()
+	treeline_layer.name = "TreelineLayer"
+	treeline_layer.motion_scale = Vector2(0.3, 0.0)  # Slow parallax for distant trees
+	treeline_layer.motion_mirroring = Vector2(treeline_texture.get_width(), 0)  # Tile horizontally
+	add_child(treeline_layer)
+	
+	# Create sprite
+	var sprite = Sprite2D.new()
+	sprite.texture = treeline_texture
+	sprite.centered = false
+	
+	# Position at bottom of screen (treeline at horizon)
+	var viewport_size = get_viewport().get_visible_rect().size
+	sprite.position.y = viewport_size.y - treeline_texture.get_height()
+	
+	# Set z-index above sky but below main game
+	sprite.z_index = -950
+	
+	treeline_layer.add_child(sprite)
+	
+	print("Treeline background layer created")
 
 func add_cloud_layer(texture: Texture2D, speed: float = 0.2) -> void:
 	"""Add a cloud layer that scrolls slowly"""
@@ -110,7 +146,7 @@ func add_foreground_layer(texture: Texture2D, speed: float = 1.2) -> void:
 	foreground_layer.add_child(sprite)
 
 func clear_layers() -> void:
-	"""Remove all dynamic layers (keeps sky)"""
+	"""Remove all dynamic layers (keeps sky and treeline)"""
 	if cloud_layer:
 		cloud_layer.queue_free()
 		cloud_layer = null
@@ -120,6 +156,12 @@ func clear_layers() -> void:
 	if foreground_layer:
 		foreground_layer.queue_free()
 		foreground_layer = null
+
+func remove_treeline() -> void:
+	"""Remove the treeline layer"""
+	if treeline_layer:
+		treeline_layer.queue_free()
+		treeline_layer = null
 
 func set_sky_texture(texture: Texture2D) -> void:
 	"""Change the sky texture"""

@@ -7,6 +7,15 @@
 - **Usage**: Main sky gradient background (furthest layer, doesn't scroll)
 - **Size**: Scales automatically to fill screen
 - **Position**: Covers entire viewport from top to bottom
+- **Z-Index**: -1000
+
+### Treeline Layer
+- **File**: `bg-treeline.png`
+- **Usage**: Distant treeline at horizon (slow parallax)
+- **Motion Scale**: 0.3 (slow movement for depth)
+- **Position**: Bottom of screen (anchored to horizon)
+- **Tiling**: Horizontal (repeats seamlessly)
+- **Z-Index**: -950
 
 ## Adding New Background Layers
 
@@ -126,19 +135,26 @@ A typical outdoor scene might have:
 
 ```
 ┌─────────────────────────────┐
-│ Sky (bg-sky-day.jpg)        │ motion_scale: 0.0
+│ Sky (bg-sky.jpg)            │ motion_scale: 0.0  z:-1000
 │ ----------------------------- │
-│ Clouds (bg-clouds.png)      │ motion_scale: 0.2
+│ Treeline (bg-treeline.png)  │ motion_scale: 0.3  z:-950
 │ ----------------------------- │
-│ Mountains (bg-mountains.png)│ motion_scale: 0.5
+│ Clouds (bg-clouds.png)      │ motion_scale: 0.2  z:-900
 │ ----------------------------- │
-│ MAIN GAME AREA              │ motion_scale: 1.0
+│ Mountains (bg-mountains.png)│ motion_scale: 0.5  z:-800
+│ ----------------------------- │
+│ MAIN GAME AREA              │ motion_scale: 1.0  z:0
 │ (Player, Enemies, Ground)   │
 │ ----------------------------- │
-│ Foreground (bg-trees.png)   │ motion_scale: 1.2
+│ Foreground (bg-trees.png)   │ motion_scale: 1.2  z:-100
 └─────────────────────────────┘
 ```
 
 ## Current Integration
 
-The sky background (`bg-sky.jpg`) is automatically loaded when the game starts. It's set up as a fixed background that covers the entire screen from top to bottom, perfect for gradient skies!
+The game currently has **2 active background layers**:
+
+1. **Sky Layer** (`bg-sky.jpg`) - Automatically loaded, fixed position, covers full screen
+2. **Treeline Layer** (`bg-treeline.png`) - Automatically loaded, slow parallax (0.3), anchored to bottom
+
+Both layers load when the game starts and create a beautiful depth effect with the treeline moving slowly as you walk!
