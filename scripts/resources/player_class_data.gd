@@ -3,7 +3,7 @@ class_name PlayerClassData
 ## Data structure for player class definitions
 
 @export var class_id: String = ""
-@export var class_name: String = ""
+@export var display_name: String = ""
 @export var description: String = ""
 @export var icon: Texture2D
 

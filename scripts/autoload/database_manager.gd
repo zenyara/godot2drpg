@@ -51,7 +51,7 @@ func _create_default_classes() -> void:
 		var class_id = class_names[i].to_lower().replace(" ", "_")
 		var class_data = PlayerClassData.new()
 		class_data.class_id = class_id
-		class_data.class_name = class_names[i]
+		class_data.display_name = class_names[i]
 		class_data.description = "A " + class_names[i] + " class"
 		
 		# Set basic stats (can be customized per class)
