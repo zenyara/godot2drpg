@@ -18,6 +18,9 @@ func _ready() -> void:
 	# Create default sky layer
 	create_sky_layer()
 	
+	# Create cloud layer (behind treeline)
+	create_cloud_layer()
+	
 	# Create treeline layer
 	create_treeline_layer()
 
@@ -92,6 +95,35 @@ func create_treeline_layer() -> void:
 	treeline_layer.add_child(sprite)
 	
 	print("Treeline background layer created")
+
+func create_cloud_layer() -> void:
+	"""Create the cloud background layer (behind treeline, in front of sky)"""
+	# Load the cloud texture
+	var cloud_texture = load("res://assets/backgrounds/bg-clouds.png")
+	
+	if not cloud_texture:
+		push_warning("Cloud texture not found!")
+		return
+	
+	# Create parallax layer
+	cloud_layer = ParallaxLayer.new()
+	cloud_layer.name = "CloudLayer"
+	cloud_layer.motion_scale = Vector2(0.2, 0.0)  # Slower than treeline (farther away)
+	cloud_layer.motion_mirroring = Vector2(cloud_texture.get_width(), 0)  # Tile horizontally
+	add_child(cloud_layer)
+	
+	# Create sprite
+	var sprite = Sprite2D.new()
+	sprite.texture = cloud_texture
+	sprite.centered = false
+	sprite.position = Vector2.ZERO  # Clouds at top/middle of screen
+	
+	# Set z-index behind treeline but in front of sky
+	sprite.z_index = -975
+	
+	cloud_layer.add_child(sprite)
+	
+	print("Cloud background layer created")
 
 func add_cloud_layer(texture: Texture2D, speed: float = 0.2) -> void:
 	"""Add a cloud layer that scrolls slowly"""

@@ -9,6 +9,14 @@
 - **Position**: Covers entire viewport from top to bottom
 - **Z-Index**: -1000
 
+### Cloud Layer
+- **File**: `bg-clouds.png`
+- **Usage**: Distant clouds (behind treeline)
+- **Motion Scale**: 0.2 (slower than treeline, farther away)
+- **Position**: Top/middle of screen
+- **Tiling**: Horizontal (repeats seamlessly)
+- **Z-Index**: -975
+
 ### Treeline Layer
 - **File**: `bg-treeline.png`
 - **Usage**: Distant treeline at horizon (slow parallax)
@@ -137,9 +145,9 @@ A typical outdoor scene might have:
 ┌─────────────────────────────┐
 │ Sky (bg-sky.jpg)            │ motion_scale: 0.0  z:-1000
 │ ----------------------------- │
-│ Treeline (bg-treeline.png)  │ motion_scale: 0.3  z:-950
+│ Clouds (bg-clouds.png)      │ motion_scale: 0.2  z:-975  ✓ ACTIVE
 │ ----------------------------- │
-│ Clouds (bg-clouds.png)      │ motion_scale: 0.2  z:-900
+│ Treeline (bg-treeline.png)  │ motion_scale: 0.3  z:-950  ✓ ACTIVE
 │ ----------------------------- │
 │ Mountains (bg-mountains.png)│ motion_scale: 0.5  z:-800
 │ ----------------------------- │
@@ -152,9 +160,10 @@ A typical outdoor scene might have:
 
 ## Current Integration
 
-The game currently has **2 active background layers**:
+The game currently has **3 active background layers**:
 
-1. **Sky Layer** (`bg-sky.jpg`) - Automatically loaded, fixed position, covers full screen
-2. **Treeline Layer** (`bg-treeline.png`) - Automatically loaded, slow parallax (0.3), anchored to bottom
+1. **Sky Layer** (`bg-sky.jpg`) - Fixed position, covers full screen (motion: 0.0)
+2. **Cloud Layer** (`bg-clouds.png`) - Slow parallax (motion: 0.2), behind treeline
+3. **Treeline Layer** (`bg-treeline.png`) - Medium parallax (motion: 0.3), horizon line
 
-Both layers load when the game starts and create a beautiful depth effect with the treeline moving slowly as you walk!
+All layers load automatically on game start and create a beautiful multi-layered parallax depth effect!
