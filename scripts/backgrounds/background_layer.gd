@@ -22,4 +22,4 @@ func _ready() -> void:
 		# Enable tiling
 		if tile_horizontal or tile_vertical:
 			sprite.region_enabled = true
-			sprite.region_rect = Rect2(0, 0, get_viewport_rect().size.x * 2, texture.get_height())
+			sprite.region_rect = Rect2(0, 0, get_viewport().get_visible_rect().size.x * 2, texture.get_height())

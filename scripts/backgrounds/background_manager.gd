@@ -40,7 +40,7 @@ func create_sky_layer() -> void:
 	sprite.position = Vector2.ZERO
 	
 	# Scale to cover screen (gradient from top down)
-	var viewport_size = get_viewport_rect().size
+	var viewport_size = get_viewport().get_visible_rect().size
 	var texture_size = sky_texture.get_size()
 	
 	# Scale to fit viewport width and height
@@ -88,7 +88,7 @@ func add_mountain_layer(texture: Texture2D, speed: float = 0.5) -> void:
 	var sprite = Sprite2D.new()
 	sprite.texture = texture
 	sprite.centered = false
-	sprite.position.y = get_viewport_rect().size.y - texture.get_height()
+	sprite.position.y = get_viewport().get_visible_rect().size.y - texture.get_height()
 	sprite.z_index = -800
 	mountain_layer.add_child(sprite)
 
