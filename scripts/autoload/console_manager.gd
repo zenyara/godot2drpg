@@ -6,7 +6,7 @@ signal console_toggled(visible: bool)
 signal command_executed(command: String, result: String)
 
 var console_visible: bool = false
-var command_history: Array[String] = []
+var command_history: Array = []
 var max_history: int = 50
 
 # Command registry
@@ -33,7 +33,7 @@ var commands: Dictionary = {
 # Console state
 var god_mode: bool = false
 var fly_mode: bool = false
-var notes: Array[String] = []
+var notes: Array = []
 
 func _ready() -> void:
 	print("ConsoleManager initialized")

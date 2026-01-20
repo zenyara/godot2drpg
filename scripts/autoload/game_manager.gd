@@ -24,8 +24,8 @@ var sfx_volume: float = 1.0
 var music_volume: float = 1.0
 
 # Screen/Area management
-var visited_screens: Array[int] = []
-var unlocked_portals: Array[String] = []
+var visited_screens: Array = []
+var unlocked_portals: Array = []
 
 func _ready() -> void:
 	print("GameManager initialized")

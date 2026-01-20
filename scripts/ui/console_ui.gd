@@ -6,7 +6,7 @@ class_name ConsoleUI
 @onready var output_log: RichTextLabel = $ConsolePanel/VBoxContainer/OutputLog
 @onready var input_field: LineEdit = $ConsolePanel/VBoxContainer/InputField
 
-var command_history: Array[String] = []
+var command_history: Array = []
 var history_index: int = -1
 
 func _ready() -> void:

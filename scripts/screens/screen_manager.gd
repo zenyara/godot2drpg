@@ -16,8 +16,8 @@ var screen_cache: Dictionary = {}
 var max_cache_size: int = 10
 
 # Spawned entities
-var spawned_enemies: Array[Enemy] = []
-var spawned_npcs: Array[Enemy] = []
+var spawned_enemies: Array = []
+var spawned_npcs: Array = []
 
 func _ready() -> void:
 	print("ScreenManager initialized")

@@ -32,7 +32,7 @@ class_name PlayerClassData
 @export var bonus_description: String = ""
 
 # Available abilities
-@export var starting_abilities: Array[String] = []
+@export var starting_abilities: Array = []
 
 # Starting equipment
 @export var starting_weapon: String = ""

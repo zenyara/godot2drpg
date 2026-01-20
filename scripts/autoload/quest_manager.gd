@@ -9,8 +9,8 @@ signal quest_failed(quest_id: String)
 
 # Quest tracking
 var active_quests: Dictionary = {}  # quest_id: quest_data
-var completed_quests: Array[String] = []
-var failed_quests: Array[String] = []
+var completed_quests: Array = []
+var failed_quests: Array = []
 
 # Quest data structure:
 # {

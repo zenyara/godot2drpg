@@ -35,25 +35,25 @@ class_name EnemyData
 @export var exp_reward: int = 10
 @export var gold_min: int = 1
 @export var gold_max: int = 5
-@export var loot_table: Array[Dictionary] = []  # [{item_id, chance, min, max}, ...]
+@export var loot_table: Array = []  # [{item_id, chance, min, max}, ...]
 
 # Special abilities
-@export var special_abilities: Array[String] = []
+@export var special_abilities: Array = []
 
 # Dialogue (for NPCs)
 @export_group("NPC Dialogue")
-@export var dialogue_lines: Array[String] = []
+@export var dialogue_lines: Array = []
 @export var quest_giver: bool = false
 @export var vendor: bool = false
-@export var vendor_inventory: Array[String] = []
+@export var vendor_inventory: Array = []
 
 func get_random_gold_drop() -> int:
 	"""Get random gold amount within min/max range"""
 	return randi_range(gold_min, gold_max)
 
-func get_loot_drops() -> Array[Dictionary]:
+func get_loot_drops() -> Array:
 	"""Roll loot table and return dropped items"""
-	var drops: Array[Dictionary] = []
+	var drops: Array = []
 	
 	for entry in loot_table:
 		var chance = entry.get("chance", 0.0)

@@ -10,7 +10,7 @@ class_name ScreenData
 @export_group("Background")
 @export var background_texture: Texture2D
 @export var background_scale: Vector2 = Vector2.ONE
-@export var parallax_layers: Array[Texture2D] = []
+@export var parallax_layers: Array = []
 
 # Connected screens (for navigation)
 @export_group("Navigation")
@@ -20,13 +20,13 @@ class_name ScreenData
 @export var connected_down: int = -1  # Screen ID below
 
 # Portals in this screen
-@export var portal_locations: Array[Dictionary] = []  # [{position, destination_screen_id}, ...]
+@export var portal_locations: Array = []  # [{position, destination_screen_id}, ...]
 
 # Spawn data
 @export_group("Spawns")
-@export var enemy_spawns: Array[Dictionary] = []  # [{enemy_id, position, respawn_time}, ...]
-@export var npc_spawns: Array[Dictionary] = []  # [{npc_id, position}, ...]
-@export var item_pickups: Array[Dictionary] = []  # [{item_id, position, respawn_time}, ...]
+@export var enemy_spawns: Array = []  # [{enemy_id, position, respawn_time}, ...]
+@export var npc_spawns: Array = []  # [{npc_id, position}, ...]
+@export var item_pickups: Array = []  # [{item_id, position, respawn_time}, ...]
 
 # Environment
 @export_group("Environment")
@@ -43,7 +43,7 @@ class_name ScreenData
 @export var ground_level: float = 0.0
 
 # Quest triggers
-@export var quest_triggers: Array[Dictionary] = []  # [{quest_id, trigger_type, position}, ...]
+@export var quest_triggers: Array = []  # [{quest_id, trigger_type, position}, ...]
 
 # Special properties
 @export var safe_zone: bool = false  # No combat allowed

@@ -8,7 +8,7 @@ signal item_added(item_id: String, amount: int)
 signal item_removed(item_id: String, amount: int)
 
 # Inventory data
-var inventory: Array[Dictionary] = []  # [{item_id, amount, data}, ...]
+var inventory: Array = []  # [{item_id, amount, data}, ...]
 var max_inventory_slots: int = 20  # Can be expanded with perks
 
 # Equipment slots
@@ -31,7 +31,7 @@ var pet_equipped_items: Dictionary = {
 }
 
 # Banking
-var bank_storage: Array[Dictionary] = []
+var bank_storage: Array = []
 var max_bank_slots: int = 50
 
 func _ready() -> void:
