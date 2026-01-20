@@ -29,9 +29,9 @@
 - **File**: `bg-path.png`
 - **Usage**: Main ground/path where player walks (generic fallback)
 - **Motion Scale**: 1.0 (same speed as player - main game layer)
-- **Position**: Bottom of screen (ground level)
+- **Position**: Full screen (0, 0) - 1920x1080
 - **Tiling**: Horizontal (repeats seamlessly)
-- **Z-Index**: -1 (just below player, above all background layers)
+- **Z-Index**: -1 (just below player, top background layer)
 
 ## Adding New Background Layers
 

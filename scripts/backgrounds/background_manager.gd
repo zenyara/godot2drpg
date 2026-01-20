@@ -150,9 +150,8 @@ func create_path_layer() -> void:
 	sprite.texture = path_texture
 	sprite.centered = false
 	
-	# Position at bottom of screen (ground level)
-	var viewport_size = get_viewport().get_visible_rect().size
-	sprite.position.y = viewport_size.y - path_texture.get_height()
+	# Position at origin since it's full screen (1920x1080)
+	sprite.position = Vector2.ZERO
 	
 	# Set z-index just below player (above all background layers)
 	sprite.z_index = -1
