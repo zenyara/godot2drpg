@@ -31,7 +31,7 @@
 - **Motion Scale**: 1.0 (same speed as player - main game layer)
 - **Position**: Bottom of screen (ground level)
 - **Tiling**: Horizontal (repeats seamlessly)
-- **Z-Index**: -50
+- **Z-Index**: -1 (just below player, above all background layers)
 
 ## Adding New Background Layers
 
@@ -159,11 +159,11 @@ A typical outdoor scene might have:
 │ ----------------------------- │
 │ Mountains (bg-mountains.png)│ motion_scale: 0.5  z:-800
 │ ----------------------------- │
-│ Path/Ground (bg-path.png)   │ motion_scale: 1.0  z:-50   ✓ ACTIVE
+│ Path/Ground (bg-path.png)   │ motion_scale: 1.0  z:-1    ✓ ACTIVE
 │ ----------------------------- │
-│ PLAYER & ENEMIES            │ motion_scale: 1.0  z:0
+│ PLAYER & ENEMIES            │ motion_scale: 1.0  z:0     ← You are here
 │ ----------------------------- │
-│ Foreground (bg-trees.png)   │ motion_scale: 1.2  z:-100
+│ Foreground (bg-trees.png)   │ motion_scale: 1.2  z:100
 └─────────────────────────────┘
 ```
 

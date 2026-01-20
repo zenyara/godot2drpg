@@ -154,8 +154,8 @@ func create_path_layer() -> void:
 	var viewport_size = get_viewport().get_visible_rect().size
 	sprite.position.y = viewport_size.y - path_texture.get_height()
 	
-	# Set z-index for main game layer (player walks on this)
-	sprite.z_index = -50
+	# Set z-index just below player (above all background layers)
+	sprite.z_index = -1
 	
 	path_layer.add_child(sprite)
 	
