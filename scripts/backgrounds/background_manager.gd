@@ -9,6 +9,7 @@ var sky_layer: ParallaxLayer = null
 var treeline_layer: ParallaxLayer = null
 var cloud_layer: ParallaxLayer = null
 var mountain_layer: ParallaxLayer = null
+var path_layer: ParallaxLayer = null
 var foreground_layer: ParallaxLayer = null
 
 func _ready() -> void:
@@ -23,6 +24,9 @@ func _ready() -> void:
 	
 	# Create treeline layer
 	create_treeline_layer()
+	
+	# Create ground path layer (main game layer)
+	create_path_layer()
 
 func create_sky_layer() -> void:
 	"""Create the sky background layer"""
@@ -125,6 +129,38 @@ func create_cloud_layer() -> void:
 	
 	print("Cloud background layer created")
 
+func create_path_layer() -> void:
+	"""Create the ground path layer (main game layer where player walks)"""
+	# Load the path texture
+	var path_texture = load("res://assets/backgrounds/bg-path.png")
+	
+	if not path_texture:
+		push_warning("Path texture not found!")
+		return
+	
+	# Create parallax layer
+	path_layer = ParallaxLayer.new()
+	path_layer.name = "PathLayer"
+	path_layer.motion_scale = Vector2(1.0, 0.0)  # Same speed as player (main game layer)
+	path_layer.motion_mirroring = Vector2(path_texture.get_width(), 0)  # Tile horizontally
+	add_child(path_layer)
+	
+	# Create sprite
+	var sprite = Sprite2D.new()
+	sprite.texture = path_texture
+	sprite.centered = false
+	
+	# Position at bottom of screen (ground level)
+	var viewport_size = get_viewport().get_visible_rect().size
+	sprite.position.y = viewport_size.y - path_texture.get_height()
+	
+	# Set z-index for main game layer (player walks on this)
+	sprite.z_index = -50
+	
+	path_layer.add_child(sprite)
+	
+	print("Path ground layer created")
+
 func add_cloud_layer(texture: Texture2D, speed: float = 0.2) -> void:
 	"""Add a cloud layer that scrolls slowly"""
 	if cloud_layer:
@@ -178,10 +214,7 @@ func add_foreground_layer(texture: Texture2D, speed: float = 1.2) -> void:
 	foreground_layer.add_child(sprite)
 
 func clear_layers() -> void:
-	"""Remove all dynamic layers (keeps sky and treeline)"""
-	if cloud_layer:
-		cloud_layer.queue_free()
-		cloud_layer = null
+	"""Remove all dynamic layers (keeps sky, clouds, treeline, and path)"""
 	if mountain_layer:
 		mountain_layer.queue_free()
 		mountain_layer = null
@@ -194,6 +227,12 @@ func remove_treeline() -> void:
 	if treeline_layer:
 		treeline_layer.queue_free()
 		treeline_layer = null
+
+func remove_path() -> void:
+	"""Remove the path layer"""
+	if path_layer:
+		path_layer.queue_free()
+		path_layer = null
 
 func set_sky_texture(texture: Texture2D) -> void:
 	"""Change the sky texture"""

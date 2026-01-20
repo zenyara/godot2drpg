@@ -25,6 +25,14 @@
 - **Tiling**: Horizontal (repeats seamlessly)
 - **Z-Index**: -950
 
+### Path/Ground Layer
+- **File**: `bg-path.png`
+- **Usage**: Main ground/path where player walks (generic fallback)
+- **Motion Scale**: 1.0 (same speed as player - main game layer)
+- **Position**: Bottom of screen (ground level)
+- **Tiling**: Horizontal (repeats seamlessly)
+- **Z-Index**: -50
+
 ## Adding New Background Layers
 
 ### Layer Types
@@ -143,7 +151,7 @@ A typical outdoor scene might have:
 
 ```
 ┌─────────────────────────────┐
-│ Sky (bg-sky.jpg)            │ motion_scale: 0.0  z:-1000
+│ Sky (bg-sky.jpg)            │ motion_scale: 0.0  z:-1000 ✓ ACTIVE
 │ ----------------------------- │
 │ Clouds (bg-clouds.png)      │ motion_scale: 0.2  z:-975  ✓ ACTIVE
 │ ----------------------------- │
@@ -151,8 +159,9 @@ A typical outdoor scene might have:
 │ ----------------------------- │
 │ Mountains (bg-mountains.png)│ motion_scale: 0.5  z:-800
 │ ----------------------------- │
-│ MAIN GAME AREA              │ motion_scale: 1.0  z:0
-│ (Player, Enemies, Ground)   │
+│ Path/Ground (bg-path.png)   │ motion_scale: 1.0  z:-50   ✓ ACTIVE
+│ ----------------------------- │
+│ PLAYER & ENEMIES            │ motion_scale: 1.0  z:0
 │ ----------------------------- │
 │ Foreground (bg-trees.png)   │ motion_scale: 1.2  z:-100
 └─────────────────────────────┘
@@ -160,10 +169,11 @@ A typical outdoor scene might have:
 
 ## Current Integration
 
-The game currently has **3 active background layers**:
+The game currently has **4 active background layers**:
 
 1. **Sky Layer** (`bg-sky.jpg`) - Fixed position, covers full screen (motion: 0.0)
-2. **Cloud Layer** (`bg-clouds.png`) - Slow parallax (motion: 0.2), behind treeline
+2. **Cloud Layer** (`bg-clouds.png`) - Slow parallax (motion: 0.2), drifting in sky
 3. **Treeline Layer** (`bg-treeline.png`) - Medium parallax (motion: 0.3), horizon line
+4. **Path/Ground Layer** (`bg-path.png`) - Main game layer (motion: 1.0), where player walks
 
-All layers load automatically on game start and create a beautiful multi-layered parallax depth effect!
+All layers load automatically on game start and create a complete parallax environment from sky to ground!
