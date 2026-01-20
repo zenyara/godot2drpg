@@ -2,13 +2,19 @@ extends Node2D
 ## Main game world node - manages screen loading and transitions
 
 @onready var player: Player = null
+@onready var background: ParallaxBackground = null
 
 func _ready() -> void:
 	# Find player
 	player = get_tree().get_first_node_in_group("player")
 	
+	# Find background
+	background = get_node_or_null("../Background")
+	
 	# Load initial screen
 	ScreenManager.load_screen(0)
+	
+	print("Game world ready with sky background")
 
 func _process(_delta: float) -> void:
 	# Check for screen transitions

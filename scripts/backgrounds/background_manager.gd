@@ -1,0 +1,129 @@
+extends ParallaxBackground
+class_name BackgroundManager
+## Manages multiple background layers with parallax scrolling
+
+# Sky layer (furthest back, slowest)
+var sky_layer: ParallaxLayer = null
+
+# Additional layers
+var cloud_layer: ParallaxLayer = null
+var mountain_layer: ParallaxLayer = null
+var foreground_layer: ParallaxLayer = null
+
+func _ready() -> void:
+	# Follow the camera
+	scroll_ignore_camera_zoom = false
+	
+	# Create default sky layer
+	create_sky_layer()
+
+func create_sky_layer() -> void:
+	"""Create the sky background layer"""
+	# Load the sky texture
+	var sky_texture = load("res://assets/backgrounds/bg-sky.jpg")
+	
+	if not sky_texture:
+		push_warning("Sky texture not found!")
+		return
+	
+	# Create parallax layer
+	sky_layer = ParallaxLayer.new()
+	sky_layer.name = "SkyLayer"
+	sky_layer.motion_scale = Vector2(0.0, 0.0)  # Sky doesn't move (furthest back)
+	sky_layer.motion_mirroring = Vector2.ZERO
+	add_child(sky_layer)
+	
+	# Create sprite
+	var sprite = Sprite2D.new()
+	sprite.texture = sky_texture
+	sprite.centered = false
+	sprite.position = Vector2.ZERO
+	
+	# Scale to cover screen (gradient from top down)
+	var viewport_size = get_viewport_rect().size
+	var texture_size = sky_texture.get_size()
+	
+	# Scale to fit viewport width and height
+	var scale_x = viewport_size.x / texture_size.x
+	var scale_y = viewport_size.y / texture_size.y
+	var scale = max(scale_x, scale_y)  # Cover the entire screen
+	
+	sprite.scale = Vector2(scale, scale)
+	
+	# Set z-index to be behind everything
+	sprite.z_index = -1000
+	
+	sky_layer.add_child(sprite)
+	
+	print("Sky background layer created")
+
+func add_cloud_layer(texture: Texture2D, speed: float = 0.2) -> void:
+	"""Add a cloud layer that scrolls slowly"""
+	if cloud_layer:
+		cloud_layer.queue_free()
+	
+	cloud_layer = ParallaxLayer.new()
+	cloud_layer.name = "CloudLayer"
+	cloud_layer.motion_scale = Vector2(speed, 0.0)
+	cloud_layer.motion_mirroring = Vector2(texture.get_width(), 0)
+	add_child(cloud_layer)
+	
+	var sprite = Sprite2D.new()
+	sprite.texture = texture
+	sprite.centered = false
+	sprite.z_index = -900
+	cloud_layer.add_child(sprite)
+
+func add_mountain_layer(texture: Texture2D, speed: float = 0.5) -> void:
+	"""Add a mountain/distant objects layer"""
+	if mountain_layer:
+		mountain_layer.queue_free()
+	
+	mountain_layer = ParallaxLayer.new()
+	mountain_layer.name = "MountainLayer"
+	mountain_layer.motion_scale = Vector2(speed, 0.0)
+	mountain_layer.motion_mirroring = Vector2(texture.get_width(), 0)
+	add_child(mountain_layer)
+	
+	var sprite = Sprite2D.new()
+	sprite.texture = texture
+	sprite.centered = false
+	sprite.position.y = get_viewport_rect().size.y - texture.get_height()
+	sprite.z_index = -800
+	mountain_layer.add_child(sprite)
+
+func add_foreground_layer(texture: Texture2D, speed: float = 1.2) -> void:
+	"""Add a foreground layer (parallax effect in front)"""
+	if foreground_layer:
+		foreground_layer.queue_free()
+	
+	foreground_layer = ParallaxLayer.new()
+	foreground_layer.name = "ForegroundLayer"
+	foreground_layer.motion_scale = Vector2(speed, 0.0)
+	foreground_layer.motion_mirroring = Vector2(texture.get_width(), 0)
+	add_child(foreground_layer)
+	
+	var sprite = Sprite2D.new()
+	sprite.texture = texture
+	sprite.centered = false
+	sprite.z_index = -100
+	foreground_layer.add_child(sprite)
+
+func clear_layers() -> void:
+	"""Remove all dynamic layers (keeps sky)"""
+	if cloud_layer:
+		cloud_layer.queue_free()
+		cloud_layer = null
+	if mountain_layer:
+		mountain_layer.queue_free()
+		mountain_layer = null
+	if foreground_layer:
+		foreground_layer.queue_free()
+		foreground_layer = null
+
+func set_sky_texture(texture: Texture2D) -> void:
+	"""Change the sky texture"""
+	if sky_layer:
+		sky_layer.queue_free()
+	
+	create_sky_layer()

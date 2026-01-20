@@ -1,0 +1,144 @@
+# Background Assets Guide
+
+## Current Backgrounds
+
+### Sky Layer
+- **File**: `bg-sky.jpg`
+- **Usage**: Main sky gradient background (furthest layer, doesn't scroll)
+- **Size**: Scales automatically to fill screen
+- **Position**: Covers entire viewport from top to bottom
+
+## Adding New Background Layers
+
+### Layer Types
+
+1. **Sky Layer** (motion_scale = 0.0)
+   - Furthest back
+   - Doesn't move with camera
+   - Examples: Sky gradient, stars, distant atmosphere
+
+2. **Cloud Layer** (motion_scale = 0.2)
+   - Slow-moving clouds
+   - Tiles horizontally
+   - Examples: Clouds, flying birds, distant weather
+
+3. **Mountain/Distant Layer** (motion_scale = 0.5)
+   - Medium distance
+   - Mountains, distant buildings, horizon
+   - Anchored to bottom of screen
+
+4. **Foreground Layer** (motion_scale = 1.2)
+   - Closest to camera
+   - Moves faster than player
+   - Examples: Foreground trees, pillars, atmospheric effects
+
+### File Naming Convention
+
+Use descriptive names:
+- `bg-sky-[variation].jpg` - Sky backgrounds
+- `bg-clouds-[type].png` - Cloud layers (use PNG for transparency)
+- `bg-mountains-[biome].png` - Mountain/distant layers
+- `bg-foreground-[element].png` - Foreground elements
+
+Examples:
+- `bg-sky-day.jpg`
+- `bg-sky-night.jpg`
+- `bg-clouds-fluffy.png`
+- `bg-mountains-snowy.png`
+- `bg-foreground-trees.png`
+
+### Recommended Sizes
+
+- **Sky**: 1920x1080 or larger (will be scaled)
+- **Cloud Layer**: 1920x300 to 1920x600 (PNG with transparency)
+- **Mountain Layer**: 1920x400 to 1920x800 (PNG with transparency)
+- **Foreground**: 1920x400 to 1920x1080 (PNG with transparency)
+
+### File Formats
+
+- **JPG**: For solid backgrounds (sky gradients)
+- **PNG**: For layers with transparency (clouds, mountains, foreground)
+
+## Using in Game
+
+### In Code (BackgroundManager)
+
+```gdscript
+# Get background manager
+var bg = get_node("Background")
+
+# Change sky
+var new_sky = load("res://assets/backgrounds/bg-sky-night.jpg")
+bg.set_sky_texture(new_sky)
+
+# Add cloud layer
+var clouds = load("res://assets/backgrounds/bg-clouds-fluffy.png")
+bg.add_cloud_layer(clouds, 0.2)  # 0.2 = slow scroll speed
+
+# Add mountains
+var mountains = load("res://assets/backgrounds/bg-mountains-snowy.png")
+bg.add_mountain_layer(mountains, 0.5)  # 0.5 = medium scroll speed
+```
+
+### Per-Screen Backgrounds
+
+Each `ScreenData` resource can specify:
+- Background texture (main layer)
+- Parallax layers array (additional layers)
+- These are automatically loaded when you enter a screen
+
+## Parallax Motion Scale
+
+The `motion_scale` determines how fast a layer moves relative to the camera:
+
+- **0.0** = Static (doesn't move) - Sky
+- **0.2** = Very slow - Distant clouds
+- **0.5** = Medium - Mountains
+- **1.0** = Same as camera - Main ground layer
+- **1.2+** = Faster than camera - Foreground effects
+
+## Tips
+
+1. **Keep file sizes reasonable**
+   - Compress JPGs to 80-90% quality
+   - Optimize PNGs with tools like TinyPNG
+
+2. **Match art style**
+   - Keep consistent color palette
+   - Match lighting direction across layers
+   - Maintain similar detail levels
+
+3. **Test parallax**
+   - Run the game and move around
+   - Adjust motion_scale values for best effect
+   - Layers should feel cohesive
+
+4. **Organize by biome**
+   - Create folders for different areas:
+     - `forest/`
+     - `cave/`
+     - `desert/`
+     - `town/`
+
+## Example Layer Stack
+
+A typical outdoor scene might have:
+
+```
+┌─────────────────────────────┐
+│ Sky (bg-sky-day.jpg)        │ motion_scale: 0.0
+│ ----------------------------- │
+│ Clouds (bg-clouds.png)      │ motion_scale: 0.2
+│ ----------------------------- │
+│ Mountains (bg-mountains.png)│ motion_scale: 0.5
+│ ----------------------------- │
+│ MAIN GAME AREA              │ motion_scale: 1.0
+│ (Player, Enemies, Ground)   │
+│ ----------------------------- │
+│ Foreground (bg-trees.png)   │ motion_scale: 1.2
+└─────────────────────────────┘
+```
+
+## Current Integration
+
+The sky background (`bg-sky.jpg`) is automatically loaded when the game starts. It's set up as a fixed background that covers the entire screen from top to bottom, perfect for gradient skies!
