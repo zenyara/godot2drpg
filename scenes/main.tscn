@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://c12345678"]
+
+[ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player/player.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://hud001" path="res://scenes/ui/hud.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://console001" path="res://scenes/ui/console.tscn" id="3"]
+[ext_resource type="Script" path="res://scripts/screens/game_world.gd" id="4"]
+
+[node name="Main" type="Node2D"]
+
+[node name="GameWorld" type="Node2D" parent="."]
+script = ExtResource("4")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+zoom = Vector2(1, 1)
+
+[node name="Player" parent="." instance=ExtResource("1")]
+position = Vector2(960, 540)
+
+[node name="HUD" parent="." instance=ExtResource("2")]
+
+[node name="Console" parent="." instance=ExtResource("3")]
