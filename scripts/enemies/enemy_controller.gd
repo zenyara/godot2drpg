@@ -8,7 +8,7 @@ class_name Enemy
 @onready var detection_area: Area2D = $DetectionArea
 
 # Enemy data
-var enemy_data: EnemyData = null
+var enemy_data = null  # EnemyData
 var enemy_id: String = ""
 
 # Stats
@@ -48,7 +48,7 @@ func _ready() -> void:
 		detection_area.body_entered.connect(_on_detection_area_entered)
 		detection_area.body_exited.connect(_on_detection_area_exited)
 
-func initialize(data: EnemyData) -> void:
+func initialize(data) -> void:  # data: EnemyData
 	"""Initialize enemy with data"""
 	enemy_data = data
 	enemy_id = data.enemy_id

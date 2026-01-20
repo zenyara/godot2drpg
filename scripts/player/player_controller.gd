@@ -31,7 +31,7 @@ var invulnerable: bool = false
 var invulnerable_timer: float = 0.0
 
 # Class data
-var player_class_data: PlayerClassData = null
+var player_class_data = null  # PlayerClassData
 
 # Input
 var input_direction: Vector2 = Vector2.ZERO

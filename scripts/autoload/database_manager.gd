@@ -3,7 +3,7 @@ extends Node
 ## Autoloaded as DatabaseManager
 
 # Player classes
-var player_classes: Dictionary = {}  # class_id: PlayerClassData
+var player_classes: Dictionary = {}  # class_id: PlayerClassData resource
 
 # Enemies and NPCs
 var enemies: Dictionary = {}  # enemy_id: EnemyData
@@ -217,15 +217,15 @@ func _load_abilities() -> void:
 	print("Ability loading not yet implemented")
 
 # Getter functions
-func get_player_class(class_id: String) -> PlayerClassData:
+func get_player_class(class_id: String):
 	"""Get player class data by ID"""
 	return player_classes.get(class_id, null)
 
-func get_enemy(enemy_id: String) -> EnemyData:
+func get_enemy(enemy_id: String):
 	"""Get enemy data by ID"""
 	return enemies.get(enemy_id, null)
 
-func get_screen(screen_id: int) -> ScreenData:
+func get_screen(screen_id: int):
 	"""Get screen data by ID"""
 	return screens.get(screen_id, null)
 

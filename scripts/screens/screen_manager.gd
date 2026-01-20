@@ -8,7 +8,7 @@ signal screen_transition_completed(screen_id: int)
 
 # Current screen
 var current_screen_id: int = 0
-var current_screen_data: ScreenData = null
+var current_screen_data = null  # ScreenData
 var current_screen_node: Node2D = null
 
 # Screen cache (to avoid reloading)
